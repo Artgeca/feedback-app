@@ -1,6 +1,6 @@
 type Props = {
   feedback: {
-    id: number;
+    id: string;
     rating: number;
     text: string;
   }[];

@@ -3,11 +3,11 @@ import Card from './shared/Card';
 
 type Props = {
   item: {
-    id: number;
+    id: string;
     rating: number;
     text: string;
   };
-  handleDelete: (id: number) => void;
+  handleDelete: (id: string) => void;
 };
 
 const FeedbackItem: React.FC<Props> = ({ item, handleDelete }) => {
