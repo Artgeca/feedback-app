@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Card from './shared/Card';
 import Button from './shared/Button';
 import RatingSelect from './RatingSelect';
-import { AddFeedbackType } from '../App';
+import FeedbackContext from '../context/Feedbackcontext';
 
-type Props = {
-  handleAdd: (newFeedback: AddFeedbackType) => void;
-};
+const FeedbackForm: React.FC = () => {
+  const { addFeedback } = useContext(FeedbackContext);
 
-const FeedbackForm: React.FC<Props> = ({ handleAdd }) => {
   const [text, setText] = useState<string>('');
   const [rating, setRating] = useState<number>(10);
   const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
@@ -38,7 +36,7 @@ const FeedbackForm: React.FC<Props> = ({ handleAdd }) => {
       };
 
       console.log(newFeedback);
-      handleAdd(newFeedback);
+      addFeedback!(newFeedback);
 
       setText('');
     }

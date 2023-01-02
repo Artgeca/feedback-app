@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import { FaTimes } from "react-icons/fa";
 import Card from './shared/Card';
+import FeedbackContext from '../context/Feedbackcontext';
 
 type Props = {
   item: {
@@ -7,15 +9,16 @@ type Props = {
     rating: number;
     text: string;
   };
-  handleDelete: (id: string) => void;
 };
 
-const FeedbackItem: React.FC<Props> = ({ item, handleDelete }) => {
+const FeedbackItem: React.FC<Props> = ({ item }) => {
+  const { deleteFeedback } = useContext(FeedbackContext);
+
   return (
     <Card>
       <>
         <div className="num-display">{item.rating}</div>
-        <button onClick={() => handleDelete(item.id)} className="close">
+        <button onClick={() => deleteFeedback!(item.id)} className="close">
           <FaTimes color='purple' />
         </button>
         <div className="text-display">{item.text}</div>
