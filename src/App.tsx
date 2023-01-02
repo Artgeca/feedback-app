@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import Header from './components/Header';
 import feedbackData from './data/feedbackData';
 import FeedbackList from './components/FeedbackList';
 import FeedbackStats from './components/FeedbackStats';
 import FeedbackForm from './components/FeedbackForm';
+import AboutPage from './components/pages/AboutPage';
+import AboutIconLink from './components/AboutIconLink';
+import Card from './components/shared/Card';
 
 type FeedbackType = {
   id: string;
@@ -28,14 +32,24 @@ const App = () => {
   };
 
   return (
-    <>
+    <Router>
       <Header />
       <div className='container'>
-        <FeedbackForm handleAdd={addFeedback} />
-        <FeedbackStats feedback={feedback} />
-        <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
+        <Routes>
+          <Route path='/' element={
+            <>
+              <FeedbackForm handleAdd={addFeedback} />
+              <FeedbackStats feedback={feedback} />
+              <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
+            </>
+          } />
+
+          <Route path='/about' element={<AboutPage />} />
+        </Routes>
+
+        <AboutIconLink />
       </div>
-    </>
+    </Router>
   );
 };
 
