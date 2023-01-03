@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Card from './shared/Card';
 import Button from './shared/Button';
 import RatingSelect from './RatingSelect';
-import FeedbackContext from '../context/Feedbackcontext';
+import FeedbackContext from '../context/FeedbackContext';
 
 const FeedbackForm: React.FC = () => {
-  const { addFeedback } = useContext(FeedbackContext);
+  const { addFeedback, feedbackEdit, updateFeedback } = useContext(FeedbackContext);
 
   const [text, setText] = useState<string>('');
   const [rating, setRating] = useState<number>(10);
@@ -36,11 +36,26 @@ const FeedbackForm: React.FC = () => {
       };
 
       console.log(newFeedback);
-      addFeedback!(newFeedback);
+
+      if (feedbackEdit && feedbackEdit.edit && feedbackEdit.item) {
+        const id = feedbackEdit.item.id;
+        updateFeedback!(id, newFeedback);
+      } else {
+        addFeedback!(newFeedback);
+      }
 
       setText('');
     }
   };
+
+  useEffect(() => {
+    if (feedbackEdit && feedbackEdit.item && feedbackEdit.edit === true) {
+      setBtnDisabled(false);
+      setText(feedbackEdit.item.text);
+      setRating(feedbackEdit.item.rating);
+    }
+  }, [feedbackEdit]);
+
 
   return (
     <Card>
